@@ -68,6 +68,8 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,6 +152,15 @@ public class InventoryMainFrame extends javax.swing.JFrame {
 
         jLabel8.setText("Decrements inventory count of item selected from the list");
 
+        jButton5.setText("Log Out");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Log History");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,7 +190,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                                 .addGap(51, 51, 51)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
@@ -199,7 +210,11 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addGap(17, 17, 17)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)
+                        .addGap(18, 18, 18)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(324, 324, 324)
@@ -209,18 +224,24 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton5)
+                            .addComponent(jButton6))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -867,6 +888,98 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        // When user log out
+        Boolean connectError = false;   // Error flag
+        Connection DBConn = null;       // MySQL connection handle
+        String description;             // Tree, seed, or shrub description
+        Boolean executeError = false;   // Error flag
+        String errString = null;        // String for displaying errors
+        int executeUpdateVal;           // Return value from execute indicating effected rows
+        String msgString = null;        // String for displaying non-error messages
+        ResultSet res = null;           // SQL query result set pointer
+        String tableSelected = null;    // String used to determine which data table to use
+        java.sql.Statement s = null;    // SQL statement pointer
+        String SQLstatement = null;     // String for building SQL queries
+        
+
+        jTextArea1.setText("");
+
+        //Now, if there was no error in the data fields, we try to
+        //connect to the database.
+        
+        try
+        {
+            msgString = ">> User Logout...";
+            jTextArea1.setText("\n"+msgString);
+
+            //define the data source
+            String SQLServerIP = jTextField1.getText();
+            String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/userhistory";
+
+            //create a connection to the db
+            DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
+
+        } catch (Exception e) {
+
+            errString =  "\nProblem connecting to database:: " + e;
+            jTextArea1.append(errString);
+            connectError = true;
+
+            } // end try-catch
+
+        //If there is not connection error, then we form the SQL statement
+        //and then execute it.
+
+        if (!connectError )
+        {
+            try
+            {
+                // get the data from the text fields
+                String group = "inventory";
+                String username = "hardcodenow";
+                String logintype = "logout";
+                String status = "successful";
+
+                // create an SQL statement variable and create the INSERT
+                // query to insert the new logout infor into the database
+
+                s = DBConn.createStatement();
+
+                // if trees are selected then insert inventory into trees
+                // table
+
+
+                SQLstatement = ("INSERT INTO loginhistory VALUES ('"+ 
+                        group +"','"+ username +"','"+ 
+                        logintype +"','"+ status +"',NOW());");
+ 
+                tableSelected = "LOGINHISTORY";
+
+                // execute the update
+                executeUpdateVal = s.executeUpdate(SQLstatement);
+
+                // let the user know all went well
+
+                jTextArea1.append("\nLOGINHISTORY UPDATED... The following was added to the " + tableSelected + " loginhistory...\n");
+                jTextArea1.append("\nGROUP:: " + group);
+                jTextArea1.append("\nUSERNAME::  " + username);
+                jTextArea1.append("\nLOGINTYPE::     " + logintype);
+                jTextArea1.append("\nSTATUS::    " + status);
+
+            } catch (Exception e) {
+
+                errString =  "\nProblem adding loginhistory:: " + e;
+                jTextArea1.append(errString);
+                executeError = true;
+
+            } // try
+        }
+        
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -883,6 +996,8 @@ public class InventoryMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
