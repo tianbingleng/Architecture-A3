@@ -160,6 +160,11 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         });
 
         jButton6.setText("Log History");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -979,6 +984,12 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        // Open a new window showing login history for inventory system.
+        new LoginHistoryFrame(jTextField1.getText()).setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
     * @param args the command line arguments
