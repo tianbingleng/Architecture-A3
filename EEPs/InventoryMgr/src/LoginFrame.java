@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,12 +14,14 @@ import java.sql.ResultSet;
  * @author Junyuan Zhang
  */
 public class LoginFrame extends javax.swing.JFrame {
+    String groupName;
 
     /**
      * Creates new form LoginFrame
      */
-    public LoginFrame() {
+    public LoginFrame(String group) {
         initComponents();
+        groupName = group;
     }
 
     /**
@@ -131,7 +135,37 @@ public class LoginFrame extends javax.swing.JFrame {
         String databaseIP = databaseIPField.getText();
         
         Connection dbConn = null;
-        
+        String errMsg = null;
+        if ((dbConn=getConnection(databaseIP,"users"))!=null){
+            try{
+                String sqlStatment = "SELECT * FROM users where username='"+username+"';";
+                java.sql.Statement s  = dbConn.createStatement();
+                ResultSet res = s.executeQuery(sqlStatment);
+                boolean success = false;
+                while (res.next()){
+                    System.out.println(res.getString(1)+" "+res.getString(2)+" "+res.getString(3)+" ");
+                    if (res.getString(1).equals(groupName) && res.getString(3).equals(passwordString)){
+                        success = true;
+                        break;
+                    }
+                }
+                
+                if (success){
+                     JOptionPane.showMessageDialog(this, "Login success");
+                }
+                else{
+                     JOptionPane.showMessageDialog(this, "Login fail. Wrong username, password or group name");
+                }
+                dbConn.close();
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
+            
+        }
+        else{
+              JOptionPane.showMessageDialog(this, "Got error while connecting to the database");
+        }
         
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -146,22 +180,24 @@ public class LoginFrame extends javax.swing.JFrame {
      * @param databaseName The name of the database
      * @param errorMsg The error message
      **/
-    private boolean getConnection(Connection dbConn, String databaseIP, String databaseName, String errorMsg){
+    private static Connection getConnection(String databaseIP, String databaseName){
         String sourceURL = "jdbc:mysql://" + databaseIP + ":3306/"+databaseName;
         try{
-            dbConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
+            Connection dbConn = DriverManager.getConnection(sourceURL,"remote","remote");
+            return dbConn;
         }
-        catch(Exception e){
-            errorMsg = e.getMessage();
-            return false;
+        catch(SQLException e){
+            String errorMsg = e.getMessage();
+          
+            return null;
         }
         
-        return true;
     }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -186,12 +222,12 @@ public class LoginFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        /*
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginFrame().setVisible(true);
+                new LoginFrame("inventory").setVisible(true);
             }
-        });*/
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
