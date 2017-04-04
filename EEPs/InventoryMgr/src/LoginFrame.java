@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,13 +16,15 @@ import javax.swing.JOptionPane;
  */
 public class LoginFrame extends javax.swing.JFrame {
     String groupName;
+    JFrame frame;
 
     /**
      * Creates new form LoginFrame
      */
-    public LoginFrame(String group) {
+    public LoginFrame(String group, JFrame frame) {
         initComponents();
         groupName = group;
+        this.frame = frame;
     }
 
     /**
@@ -152,6 +155,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 
                 if (success){
                      JOptionPane.showMessageDialog(this, "Login success");
+                     frame.setVisible(true);
                 }
                 else{
                      JOptionPane.showMessageDialog(this, "Login fail. Wrong username, password or group name");
@@ -225,7 +229,7 @@ public class LoginFrame extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginFrame("inventory").setVisible(true);
+                new LoginFrame("inventory", new InventoryMainFrame()).setVisible(true);
             }
         });
     }
