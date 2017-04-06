@@ -1,7 +1,6 @@
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
+import Middleware.GetUserHistory;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,81 +24,14 @@ public class LoginHistoryFrame extends javax.swing.JFrame {
     }
     
     private void loadUserHistory(String SQLServerIPAddress) {
-        Boolean connectError = false;   // Error flag
-        Connection DBConn = null;       // MySQL connection handle
-        Boolean executeError = false;   // Error flag
-        String errString = null;        // String for displaying errors
+
         String msgString = null;        // String for displaying non-error messages
         ResultSet res = null;           // SQL query result set pointer
         String tableSelected = null;    // String used to determine which data table to use
         java.sql.Statement s = null;    // SQL statement pointer
         
-        try
-        {
-            msgString = ">> Establishing Driver...";
-            jTextArea1.setText("\n"+msgString);
-
-            //load JDBC driver class for MySQL
-            Class.forName( "com.mysql.jdbc.Driver" );
-
-            msgString = ">> Setting up URL...";
-            jTextArea1.append("\n"+msgString);
-
-            //define the data source
-            String SQLServerIP = SQLServerIPAddress;
-            String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/userhistory";
-
-            msgString = ">> Establishing connection with: " + sourceURL + "...";
-            jTextArea1.append("\n"+msgString);
-
-            //create a connection to the db
-            DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-        } catch (Exception e) {
-
-            errString =  "\nProblem connecting to database:: " + e;
-            jTextArea1.append(errString);
-            connectError = true;
-
-        } // end try-catch
-        
-        if (!connectError )
-        {
-            try
-            {
-                // create an SQL statement variable and create the INSERT
-                // query to insert the new inventory into the database
-
-                s = DBConn.createStatement();
-
-                // now we build a query to list the inventory table contents
-                // for the user
-                // ... here is the SQL for trees
-
-                res = s.executeQuery( "Select * from loginhistory" );
-                tableSelected = "LOGINHISTORY";
-
-                // Now we list the loginhistory for the selected table
-                jTextArea1.setText("==============================================================\n");
-                jTextArea1.append("Group       DateTime                                 ");
-                jTextArea1.append("Login/Out   Status       Username");
-                while (res.next())
-                {
-                    msgString = res.getString(1) + "  " + res.getString(5) +
-                            "          "+ res.getString(3) + "         " + res.getString(4) + "       " + res.getString(3);
-                    jTextArea1.append("\n"+msgString);
-
-                } // while
-
-            } catch(Exception e) {
-
-                errString =  "\nProblem with " + tableSelected +" query:: " + e;
-                jTextArea1.append(errString);
-                executeError = true;
-
-            } // try
-        }
-        
+        String result = GetUserHistory.getUserHistoryList(SQLServerIPAddress, "inventory");
+        jTextArea1.setText(result);
         
     }
 
