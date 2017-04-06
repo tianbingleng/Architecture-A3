@@ -3,9 +3,11 @@ import Middleware.AddProductInfo;
 import Middleware.DecrementProduct;
 import Middleware.GetProductInfo;
 import Middleware.DeleteProduct;
+import Middleware.AddLogoutInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /******************************************************************************
  * File:NewJFrame.java
@@ -742,92 +744,10 @@ public class InventoryMainFrame extends MyFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         // When user log out
-        Boolean connectError = false;   // Error flag
-        Connection DBConn = null;       // MySQL connection handle
-        String description;             // Tree, seed, or shrub description
-        Boolean executeError = false;   // Error flag
-        String errString = null;        // String for displaying errors
-        int executeUpdateVal;           // Return value from execute indicating effected rows
-        String msgString = null;        // String for displaying non-error messages
-        ResultSet res = null;           // SQL query result set pointer
-        String tableSelected = null;    // String used to determine which data table to use
-        java.sql.Statement s = null;    // SQL statement pointer
-        String SQLstatement = null;     // String for building SQL queries
-        
-
-        jTextArea1.setText("");
-
-        //Now, if there was no error in the data fields, we try to
-        //connect to the database.
-        
-        try
-        {
-            msgString = ">> User Logout...";
-            jTextArea1.setText("\n"+msgString);
-
-            //define the data source
-            String SQLServerIP = jTextField1.getText();
-            String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/userhistory";
-
-            //create a connection to the db
-            DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-        } catch (Exception e) {
-
-            errString =  "\nProblem connecting to database:: " + e;
-            jTextArea1.append(errString);
-            connectError = true;
-
-            } // end try-catch
-
-        //If there is not connection error, then we form the SQL statement
-        //and then execute it.
-
-        if (!connectError )
-        {
-            try
-            {
-                // get the data from the text fields
-                String group = "inventory";
-                String username = this.getUsername();
-                String logintype = "logout";
-                String status = "successful";
-
-                // create an SQL statement variable and create the INSERT
-                // query to insert the new logout infor into the database
-
-                s = DBConn.createStatement();
-
-                // if trees are selected then insert inventory into trees
-                // table
-
-
-                SQLstatement = ("INSERT INTO loginhistory VALUES ('"+ 
-                        group +"','"+ username +"','"+ 
-                        logintype +"','"+ status +"',NOW());");
- 
-                tableSelected = "LOGINHISTORY";
-
-                // execute the update
-                executeUpdateVal = s.executeUpdate(SQLstatement);
-
-                // let the user know all went well
-
-                jTextArea1.append("\nLOGINHISTORY UPDATED... The following was added to the " + tableSelected + " loginhistory...\n");
-                jTextArea1.append("\nGROUP:: " + group);
-                jTextArea1.append("\nUSERNAME::  " + username);
-                jTextArea1.append("\nLOGINTYPE::     " + logintype);
-                jTextArea1.append("\nSTATUS::    " + status);
-
-            } catch (Exception e) {
-
-                errString =  "\nProblem adding loginhistory:: " + e;
-                jTextArea1.append(errString);
-                executeError = true;
-
-            } // try
-        }
-        
+        String result = AddLogoutInfo.addLogoutInfo(jTextField1.getText(), "inventory", getUsername());  
+        JOptionPane.showMessageDialog(this, "Logout Success.");
+        this.dispose();
+        System.exit(0);
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
