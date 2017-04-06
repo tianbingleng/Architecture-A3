@@ -1,5 +1,7 @@
 
+import Middleware.SelectOrder;
 import java.sql.*;
+import java.util.ArrayList;
 
  /******************************************************************************
  * File:NewJFrame.java
@@ -350,96 +352,29 @@ public class NewJFrame extends javax.swing.JFrame {
         // check is here.
 
         if ( !orderBlank )
-        {
-            try
-            {
-                msgString = ">> Establishing Driver...";
-                jTextArea4.setText("\n"+msgString);
-
-                //Load J Connector for MySQL - explicit loads are not needed for 
-                //connectors that are version 4 and better
-                //Class.forName( "com.mysql.jdbc.Driver" );
-
-                msgString = ">> Setting up URL...";
-                jTextArea4.append("\n"+msgString);
-
-                //define the data source
-                String SQLServerIP = jTextField1.getText();
-                String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/orderinfo";
-
-                msgString = ">> Establishing connection with: " + sourceURL + "...";
-                jTextArea4.append("\n"+msgString);
-
-                //create a connection to the db - note the default account is "remote"
-                //and the password is "remote_pass" - you will have to set this
-                //account up in your database
-                DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-            } catch (Exception e) {
-
-                errString =  "\nProblem connecting to orderinfo database:: " + e;
-                jTextArea4.append(errString);
-                connectError = true;
-
-            } // end try-catch
-
-        } // blank order check 
-
-        if ( !connectError && !orderBlank )
-        {
-            try
-            {
-                s = DBConn.createStatement();
-                SQLStatement = "SELECT * FROM orders WHERE order_id = " + Integer.parseInt(orderID);
-                res = s.executeQuery( SQLStatement );
-                
-                // Get the information from the database. Display the
-                // first and last name, address, phone number, address, and
-                // order date. Same the ordertable name - this is the name of
-                // the table that is created when an order is submitted that
-                // contains the list of order items.
-
-                while (res.next()) {
-                    
-                  orderTable = res.getString(9);         // name of table with list of items
-                  jTextField2.setText(res.getString(3)); // first name
-                  jTextField3.setText(res.getString(4)); // last name
-                  jTextField4.setText(res.getString(6)); // phone
-                  jTextField5.setText(res.getString(2)); // order date
-                  jTextArea2.setText(res.getString(5));  // address
-
-                } // for each element in the return SQL query
-
-                // get the order items from the related order table
-                SQLStatement = "SELECT * FROM " + orderTable;
-                res = s.executeQuery( SQLStatement );
-
-
-                // list the items on the form that comprise the order
-                jTextArea3.setText("");
-
-                while (res.next())
-                {
-                    msgString = res.getString(1) + ":  PRODUCT ID: " + res.getString(2) +
-                         "  DESCRIPTION: "+ res.getString(3) + "  PRICE $" + res.getString(4);
-                    jTextArea3.append(msgString + "\n");
-
-                } // while
-
-                // This global variable is used to update the record as shipped
-                updateOrderID = Integer.parseInt(orderID);
-
-                // Update the form
-                jButton1.setEnabled(true);
-                msgString = "RECORD RETRIEVED...";
-                jTextArea4.setText(msgString);
-                
-            } catch (Exception e) {
-
-                errString =  "\nProblem getting order items:: " + e;
-                jTextArea1.append(errString);
-
-            } // end try-catch
+        {          
+          ArrayList<String> result = SelectOrder.selectOrderTable(jTextField1.getText(), orderID);
+          if (result.size() == 1){ //error occurs
+              jTextArea1.append(result.get(0));
+          }
+          else{
+              orderTable = result.get(0);         // name of table with list of items
+              jTextField2.setText(result.get(1)); // first name
+              jTextField3.setText(result.get(2)); // last name
+              jTextField4.setText(result.get(3)); // phone
+              jTextField5.setText(result.get(4)); // order date
+              jTextArea2.setText(result.get(5));  // address
+              String order = SelectOrder.selectOrder(jTextField1.getText(), orderTable);
+              if (order.startsWith("\n")){
+                  jTextArea1.append(order);
+              }
+              else{
+                  jTextArea3.setText(order);
+                  jButton1.setEnabled(true);
+                  msgString = "RECORD RETRIEVED...";
+                  jTextArea4.setText(msgString);
+              }
+          }
 
         } // connect and blank order check
         
