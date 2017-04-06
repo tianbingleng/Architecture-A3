@@ -1,7 +1,7 @@
 
 import Middleware.AddProductInfo;
-import Middleware.DeleteProductInfo;
 import Middleware.GetProductInfo;
+import Middleware.DeleteProduct;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -545,11 +545,6 @@ public class InventoryMainFrame extends MyFrame {
                 String result = GetProductInfo.getProductList(jTextField1.getText(), "seeds");
                 jTextArea1.setText(result);
             }
-            if (jRadioButton3.isSelected())
-            {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "seeds");
-                jTextArea1.setText(result);
-            }
             if (jRadioButton4.isSelected())
             {
                 String result = GetProductInfo.getProductList(jTextField1.getText(), "cultureboxes");
@@ -628,73 +623,29 @@ public class InventoryMainFrame extends MyFrame {
             {
                 jTextArea1.setText("");
                 jTextArea1.append( "Deleting ProductID: " + productID );
-
-                // set up a connection to the LeafTech database
-                try
-                {                
-                    //load JDBC driver class for MySQL
-                    Class.forName( "com.mysql.jdbc.Driver" );
-
-                    //define the data source
-                    String SQLServerIP = jTextField1.getText();
-                    String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/inventory";
-
-                    //create a connection to the db
-                    DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-                } catch (Exception e) {
-
-                    errString =  "\nProblem connecting to database:: " + e;
-                    jTextArea1.append(errString);
-                    connectError = true;
-
-                } // end try-catch
+                String category = "category";
+                if (jRadioButton1.isSelected())
+                    category = "trees";
+                if (jRadioButton2.isSelected())
+                    category = "shrubs";
+            
+                if (jRadioButton3.isSelected())
+                    category = "seeds";
+            
+                if (jRadioButton4.isSelected())
+                    category = "cultureboxes";
                 
-                //If there is no connection error, then we form the SQL statement
-                //to delete the inventory item and then execute it.
+                if (jRadioButton5.isSelected())
+                    category = "genomics";
 
-                if (!connectError )
-                {
-                    try
-                    {
-                        s = DBConn.createStatement();
+                if (jRadioButton6.isSelected())
+                     category = "processing";
+              
+                if (jRadioButton7.isSelected())
+                    category = "referencematerials";
+                
+                jTextArea1.append(DeleteProduct.deleteProduct(jTextField1.getText(),category,productID));
 
-                        // if trees inventory selected
-                        if (jRadioButton1.isSelected())
-                        {
-                            SQLstatement = ( "DELETE FROM trees WHERE product_code = '" + productID + "';");
-                        }
-
-                        // if shrubs inventory selected
-                        if (jRadioButton2.isSelected())
-                        {
-                            SQLstatement = ( "DELETE FROM shrubs WHERE product_code = '" + productID + "';");
-                        }
-
-                        // if seeds inventory selected
-                        if (jRadioButton3.isSelected())
-                        {
-                            SQLstatement = ( "DELETE FROM seeds WHERE product_code = '" + productID + "';");
-                        }
-   
-                        // execute the delete query
-                        
-                        executeUpdateVal = s.executeUpdate(SQLstatement);
-
-                        // let the user know all went well
-                        
-                        jTextArea1.append("\n\n" + productID + " deleted...");
-                        jTextArea1.append("\n Number of items deleted: " + executeUpdateVal );
-
-
-                    } catch (Exception e) {
-
-                        errString =  "\nProblem with delete:: " + e;
-                        jTextArea1.append(errString);
-
-                    } // try
-               
-                } // connection check    
                                        
             } else {
 
