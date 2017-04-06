@@ -27,7 +27,7 @@ import java.sql.ResultSet;
  *
  * @author lattanze
  */
-public class InventoryMainFrame extends javax.swing.JFrame {
+public class InventoryMainFrame extends MyFrame {
 
        String versionID = "v2.10.10";
 
@@ -944,7 +944,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
             {
                 // get the data from the text fields
                 String group = "inventory";
-                String username = "hardcodenow";
+                String username = this.getUsername();
                 String logintype = "logout";
                 String status = "successful";
 
