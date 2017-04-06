@@ -37,8 +37,15 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES ('inventory','i1','i1');
+INSERT INTO `users` VALUES ('inventory','i2','i2');
+INSERT INTO `users` VALUES ('inventory','i3','i3');
 INSERT INTO `users` VALUES ('order','o1','o1');
+INSERT INTO `users` VALUES ('order','o2','o2');
+INSERT INTO `users` VALUES ('order','o3','o3');
 INSERT INTO `users` VALUES ('shipping','s1','s1');
+INSERT INTO `users` VALUES ('shipping','s2','s2');
+INSERT INTO `users` VALUES ('shipping','s3','s3');
+
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
