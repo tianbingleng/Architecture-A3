@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
+import Middleware.GetUserInfo;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,12 +17,12 @@ import javax.swing.JFrame;
  */
 public class LoginFrame extends javax.swing.JFrame {
     String groupName;
-    JFrame frame;
+    MyFrame frame;
 
     /**
      * Creates new form LoginFrame
      */
-    public LoginFrame(String group, JFrame frame) {
+    public LoginFrame(String group, MyFrame frame) {
         initComponents();
         groupName = group;
         this.frame = frame;
@@ -137,38 +138,17 @@ public class LoginFrame extends javax.swing.JFrame {
         String passwordString = String.copyValueOf(passwordField.getPassword());
         String databaseIP = databaseIPField.getText();
         
-        Connection dbConn = null;
-        String errMsg = null;
-        if ((dbConn=getConnection(databaseIP,"users"))!=null){
-            try{
-                String sqlStatment = "SELECT * FROM users where username='"+username+"';";
-                java.sql.Statement s  = dbConn.createStatement();
-                ResultSet res = s.executeQuery(sqlStatment);
-                boolean success = false;
-                while (res.next()){
-                    System.out.println(res.getString(1)+" "+res.getString(2)+" "+res.getString(3)+" ");
-                    if (res.getString(1).equals(groupName) && res.getString(3).equals(passwordString)){
-                        success = true;
-                        break;
-                    }
-                }
-                
-                if (success){
-                     JOptionPane.showMessageDialog(this, "Login success");
-                     frame.setVisible(true);
-                }
-                else{
-                     JOptionPane.showMessageDialog(this, "Login fail. Wrong username, password or group name");
-                }
-                dbConn.close();
-            }
-            catch(SQLException e){
-                e.printStackTrace();
-            }
-            
+        String result = GetUserInfo.getLoginStatus(databaseIP, groupName, username, passwordString);
+        if (result.equals("success")){
+            JOptionPane.showMessageDialog(this, "Login success");
+            frame.setUsername(username);
+            frame.setVisible(true);
+        }
+        else if (result.equals("fail")){
+            JOptionPane.showMessageDialog(this, "Login fail. Wrong username, password or group name");
         }
         else{
-              JOptionPane.showMessageDialog(this, "Got error while connecting to the database");
+            JOptionPane.showMessageDialog(this, "Got error while connecting to the database");
         }
         
     }//GEN-LAST:event_loginButtonActionPerformed
@@ -177,26 +157,6 @@ public class LoginFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    /**
-     * @return true get connected to the database
-     * @return false get error while connecting
-     * @param databaseIP The IP of database
-     * @param databaseName The name of the database
-     * @param errorMsg The error message
-     **/
-    private static Connection getConnection(String databaseIP, String databaseName){
-        String sourceURL = "jdbc:mysql://" + databaseIP + ":3306/"+databaseName;
-        try{
-            Connection dbConn = DriverManager.getConnection(sourceURL,"remote","remote");
-            return dbConn;
-        }
-        catch(SQLException e){
-            String errorMsg = e.getMessage();
-          
-            return null;
-        }
-        
-    }
     /**
      * @param args the command line arguments
      */
