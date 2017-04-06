@@ -14,11 +14,12 @@ import java.sql.Statement;
  *
  * @author Shan
  */
-public class GetProductInfo
+public class AddProductInfo
 {
     public static String username = "remote";
     public static String password = "remote_pass";
-    public static String getProductList(String SQLServerIP, String category)
+    public static String addProduct(String SQLServerIP, String category, 
+            String productID, String description, String quantity, String perUnitCost)
     {
         Boolean connectError = false;       // Error flag
         Connection DBConn = null;           // MySQL connection handle
@@ -70,25 +71,19 @@ public class GetProductInfo
             try
             {
                 s = DBConn.createStatement();
-                res = s.executeQuery( "Select * from "+category);
-
-                //Display the data in the textarea
+                s.executeUpdate(insert(category, productID, description, quantity, perUnitCost));
                 
-                result = "";
-
-                while (res.next())
-                {
-                    msgString = category+">>" + res.getString(1) + "::" + res.getString(2) +
-                            " :: "+ res.getString(3) + "::" + res.getString(4);
-                    result = result + ("\n"+msgString);
-
-                } 
-                                
-            } catch (Exception e) {
-
+                result += ("\nINVENTORY UPDATED... The following was added to the " + category + " inventory...\n");
+                result += ("\nProduct Code:: " + productID);
+                result += ("\nDescription::  " + description);
+                result += ("\nQuantity::     " + quantity);
+                result += ("\nUnit Cost::    " + perUnitCost);
+                
+            }
+            catch (Exception e)
+            {
                 errString =  "\nProblem getting tree inventory:: " + e;
-                result = result + errString;
-
+                result = result + e.toString();
             } // end try-catch
         } // if connect check
         return result;
@@ -104,6 +99,25 @@ public class GetProductInfo
         if(category.equals("processing")) return "leaftech";
         if(category.equals("referencematerials")) return "leaftech";
         return "";
-        
     }
+    
+    public static String insert(String category, String productID, 
+            String description, String quantity, String perUnitCost )
+    {
+        if(category.equals("trees")||category.equals("shrubs")||category.equals("seeds"))
+        {
+            return "INSERT INTO "+category+" (product_code, " +
+                            "description, quantity, price) VALUES ( '" +
+                            productID + "', " + "'" + description + "', " +
+                            quantity + ", " + perUnitCost + ");";
+        }
+        else
+        {
+            return "INSERT INTO "+category+" (productid, " +
+                            "productdescription, productquantity, productprice) VALUES ( '" +
+                            productID + "', " + "'" + description + "', " +
+                            quantity + ", " + perUnitCost + ");";
+        }
+    }
+        
 }
