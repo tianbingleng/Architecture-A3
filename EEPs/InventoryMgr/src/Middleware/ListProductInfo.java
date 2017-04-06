@@ -14,7 +14,7 @@ import java.sql.Statement;
  *
  * @author Shan
  */
-public class GetProductInfo
+public class ListProductInfo
 {
     public static String username = "remote";
     public static String password = "remote_pass";

@@ -1,7 +1,7 @@
 
 import Middleware.AddProductInfo;
 import Middleware.DecrementProduct;
-import Middleware.GetProductInfo;
+import Middleware.ListProductInfo;
 import Middleware.DeleteProduct;
 import Middleware.AddLogInLogOutInfo;
 import java.sql.Connection;
@@ -516,37 +516,37 @@ public class InventoryMainFrame extends MyFrame {
             
             if (jRadioButton1.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "trees");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "trees");
                 jTextArea1.setText(result);
             }
             if (jRadioButton2.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "shrubs");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "shrubs");
                 jTextArea1.setText(result);
             }
             if (jRadioButton3.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "seeds");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "seeds");
                 jTextArea1.setText(result);
             }
             if (jRadioButton4.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "cultureboxes");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "cultureboxes");
                 jTextArea1.setText(result);
             }
             if (jRadioButton5.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "genomics");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "genomics");
                 jTextArea1.setText(result);
             }
             if (jRadioButton6.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "processing");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "processing");
                 jTextArea1.setText(result);
             }
             if (jRadioButton7.isSelected())
             {
-                String result = GetProductInfo.getProductList(jTextField1.getText(), "referencematerials");
+                String result = ListProductInfo.getProductList(jTextField1.getText(), "referencematerials");
                 jTextArea1.setText(result);
             }
             // end try-catch
