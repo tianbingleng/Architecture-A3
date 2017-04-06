@@ -1,6 +1,7 @@
 
 import Middleware.GetOrders;
 import Middleware.SelectOrder;
+import Middleware.ShipOrder;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -370,6 +371,7 @@ public class NewJFrame extends javax.swing.JFrame {
                   jTextArea1.append(order);
               }
               else{
+                  updateOrderID = Integer.parseInt(orderID);
                   jTextArea3.setText(order);
                   jButton1.setEnabled(true);
                   msgString = "RECORD RETRIEVED...";
@@ -382,68 +384,10 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // This method is responsible changing the status of the order
-        // to shipped.
-
-        Boolean connectError = false;       // Error flag
-        Connection DBConn = null;           // MySQL connection handle
-        String errString = null;            // String for displaying errors
-        String msgString = null;            // String for displaying non-error messages
-        ResultSet res = null;               // SQL query result set pointer
-        int rows;                           // Rows updated
-        Statement s = null;                 // SQL statement pointer
-        String SQLStatement = null;         // SQL statement string
-
-        // Connect to the order database
-        try
-        {
-            msgString = ">> Establishing Driver...";
-            jTextArea4.setText("\n"+msgString);
-
-            //load JDBC driver class for MySQL
-            Class.forName( "com.mysql.jdbc.Driver" );
-
-            msgString = ">> Setting up URL...";
-            jTextArea4.append("\n"+msgString);
-
-            //define the data source
-            String SQLServerIP = jTextField1.getText();
-            String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/orderinfo";
-
-            msgString = ">> Establishing connection with: " + sourceURL + "...";
-            jTextArea4.append("\n"+msgString);
-
-            //create a connection to the db - note the default account is "remote"
-            //and the password is "remote_pass" - you will have to set this
-            //account up in your database
-            DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-        } catch (Exception e) {
-
-            errString =  "\nProblem connecting to orderinfo database:: " + e;
-            jTextArea4.append(errString);
-            connectError = true;
-
-        } // end try-catch
-
-        // If we are connected, then we update the shipped status
-
-        if ( !connectError )
-        {
-            try
-            {
-                // first we create the query
-                s = DBConn.createStatement();
-                SQLStatement = "UPDATE orders SET shipped=" + true + " WHERE order_id=" + updateOrderID;
-
-                // execute the statement
-                rows = s.executeUpdate( SQLStatement );
-
-                // if the query worked, then we display the data in TextArea 4 - BTW, its highly
-                // unlikely that the row won't exist and if it does the database tables are
-                // really screwed up... this should not fail if you get here, but the check (in the
-                // form of the else clause) is in place anyway
-
+     
+        String result = ShipOrder.shipOrder( jTextField1.getText(), updateOrderID);
+        if (!result.startsWith("\n"))   {     
+                int rows = Integer.valueOf(result);
                 if (rows > 0)
                 {
                    jTextArea4.setText("\nOrder #" + updateOrderID + " status has been changed to shipped.");
@@ -465,15 +409,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 jTextField4.setText("");
                 jTextField5.setText("");
 
-            } catch (Exception e) {
-
-                errString =  "\nProblem updating status:: " + e;
-                jTextArea4.append(errString);
-                jTextArea1.setText("");
-
-            } // end try-catch
-
-        } // if connect check
+        }
+        else{
+            jTextArea4.append(result);
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
