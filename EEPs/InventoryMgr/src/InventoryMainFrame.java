@@ -1,4 +1,5 @@
 
+import Middleware.GetProductInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,18 +27,15 @@ import java.sql.ResultSet;
  *
  * @author lattanze
  */
-public class InventoryMainFrame extends MyFrame {
+public class InventoryMainFrame extends javax.swing.JFrame {
 
        String versionID = "v2.10.10";
-       
 
     /** Creates new form AddInventoryMainFrame */
     public InventoryMainFrame() {
         initComponents();
         jLabel1.setText("Inventory Management Application " + versionID);
     }
-    
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -60,7 +58,6 @@ public class InventoryMainFrame extends MyFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
@@ -71,8 +68,11 @@ public class InventoryMainFrame extends MyFrame {
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jRadioButton5 = new javax.swing.JRadioButton();
+        jRadioButton6 = new javax.swing.JRadioButton();
+        jRadioButton7 = new javax.swing.JRadioButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,17 +155,31 @@ public class InventoryMainFrame extends MyFrame {
 
         jLabel8.setText("Decrements inventory count of item selected from the list");
 
-        jButton5.setText("Log Out");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton4.setText("Culture Boxes");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jRadioButton4ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Log History");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton5.setText("Genomics");
+        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jRadioButton5ActionPerformed(evt);
+            }
+        });
+
+        jRadioButton6.setText("Processing");
+        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton6ActionPerformed(evt);
+            }
+        });
+
+        jRadioButton7.setText("Reference Materials");
+        jRadioButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton7ActionPerformed(evt);
             }
         });
 
@@ -174,98 +188,106 @@ public class InventoryMainFrame extends MyFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField4)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton2))
-                                .addGap(51, 51, 51)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 10, Short.MAX_VALUE))))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(17, 17, 17)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
-                        .addGap(18, 18, 18)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(324, 324, 324)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(5, 5, 5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextField3)
+                                            .addComponent(jTextField4)
+                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addComponent(jRadioButton1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jRadioButton4))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jRadioButton3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jRadioButton7)
+                                                    .addComponent(jRadioButton5)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jRadioButton2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jRadioButton6)))
+                                        .addGap(26, 26, 26)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(17, 17, 17)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRadioButton1)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jRadioButton4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jLabel3))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(jRadioButton3))
+                            .addComponent(jRadioButton5, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRadioButton2)
-                            .addComponent(jLabel4)))
+                            .addComponent(jLabel4)
+                            .addComponent(jRadioButton6)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,8 +300,10 @@ public class InventoryMainFrame extends MyFrame {
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton4)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -291,6 +315,11 @@ public class InventoryMainFrame extends MyFrame {
         jRadioButton1.setSelected(true);
         jRadioButton2.setSelected(false);
         jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
+        
 
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
@@ -299,6 +328,10 @@ public class InventoryMainFrame extends MyFrame {
         jRadioButton1.setSelected(false);
         jRadioButton2.setSelected(false);
         jRadioButton3.setSelected(true);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -306,6 +339,10 @@ public class InventoryMainFrame extends MyFrame {
         jRadioButton1.setSelected(false);
         jRadioButton2.setSelected(true);        
         jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -500,17 +537,17 @@ public class InventoryMainFrame extends MyFrame {
         java.sql.Statement s = null;    // SQL statement pointer
 
         // Check to make sure a radio button is selected
-        if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected())
+        if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected() 
+                ||jRadioButton4.isSelected() || jRadioButton5.isSelected() || jRadioButton6.isSelected()
+                ||jRadioButton7.isSelected())
         {
             fieldError = false;
 
         } else {
 
-            msgString = "Must select Tree, Seeds, or Shrubs radio button.";
+            msgString = "Must select category radio button.";
             jTextArea1.setText("\n"+msgString);
         }
-
-
         //Now, we try to connect to the inventory database.
         if (!fieldError)
         {
@@ -521,88 +558,49 @@ public class InventoryMainFrame extends MyFrame {
             jTextField5.setText("");
             jTextArea1.setText("");
             
-            try
+            if (jRadioButton1.isSelected())
             {
-                msgString = ">> Establishing Driver...";
-                jTextArea1.setText("\n"+msgString);
-
-                //load JDBC driver class for MySQL
-                Class.forName( "com.mysql.jdbc.Driver" );
-
-                msgString = ">> Setting up URL...";
-                jTextArea1.append("\n"+msgString);
-
-                //define the data source
-                String SQLServerIP = jTextField1.getText();
-                String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/inventory";
-
-                msgString = ">> Establishing connection with: " + sourceURL + "...";
-                jTextArea1.append("\n"+msgString);
-
-                //create a connection to the db
-                DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-            } catch (Exception e) {
-
-                errString =  "\nProblem connecting to database:: " + e;
-                jTextArea1.append(errString);
-                connectError = true;
-
-            } // end try-catch
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "trees");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton2.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "shrubs");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton3.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "seeds");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton3.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "seeds");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton4.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "cultureboxes");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton5.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "genomics");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton6.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "processing");
+                jTextArea1.setText(result);
+            }
+            if (jRadioButton7.isSelected())
+            {
+                String result = GetProductInfo.getProductList(jTextField1.getText(), "referencematerials");
+                jTextArea1.setText(result);
+            }
+            // end try-catch
 
         } // fielderror check - make sure a product is selected
-    
-        //If there is not connection error, then we form the SQL statement
-        //and then execute it.
-
-        if (!connectError && !fieldError)
-        {
-            try
-            {
-                // create an SQL statement variable and create the INSERT
-                // query to insert the new inventory into the database
-
-                s = DBConn.createStatement();
-
-                // now we build a query to list the inventory table contents
-                // for the user
-                // ... here is the SQL for trees
-                if (jRadioButton1.isSelected())
-                {
-                    res = s.executeQuery( "Select * from trees" );
-                    tableSelected = "TREE";
-                }
-                // ... here is the SQL for shrubs
-                if (jRadioButton2.isSelected())
-                {
-                    res = s.executeQuery( "Select * from shrubs" );
-                    tableSelected = "SHRUB";
-                }
-                // ... here is the SQL for seeds
-                if (jRadioButton3.isSelected())
-                {
-                    res = s.executeQuery( "Select * from seeds" );
-                    tableSelected = "SEED";
-                }
-
-                // Now we list the inventory for the selected table
-                jTextArea1.setText("");
-                while (res.next())
-                {
-                    msgString = tableSelected+">>" + res.getString(1) + "::" + res.getString(2) +
-                            " :: "+ res.getString(3) + "::" + res.getString(4);
-                    jTextArea1.append("\n"+msgString);
-
-                } // while
-
-            } catch(Exception e) {
-
-                errString =  "\nProblem with " + tableSelected +" query:: " + e;
-                jTextArea1.append(errString);
-                executeError = true;
-
-            } // try
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -946,8 +944,8 @@ public class InventoryMainFrame extends MyFrame {
             {
                 // get the data from the text fields
                 String group = "inventory";
+                String username = "hardcodenow";
                 String logintype = "logout";
-                String username = this.getUsername();
                 String status = "successful";
 
                 // create an SQL statement variable and create the INSERT
@@ -994,6 +992,50 @@ public class InventoryMainFrame extends MyFrame {
         new LoginHistoryFrame(jTextField1.getText()).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton1.setSelected(false);
+        jRadioButton2.setSelected(false);        
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(true);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton1.setSelected(false);
+        jRadioButton2.setSelected(false);        
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(true);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
+    }//GEN-LAST:event_jRadioButton5ActionPerformed
+
+    private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton1.setSelected(false);
+        jRadioButton2.setSelected(false);        
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(true);
+    }//GEN-LAST:event_jRadioButton7ActionPerformed
+
+    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton1.setSelected(false);
+        jRadioButton2.setSelected(false);        
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(true);
+        jRadioButton7.setSelected(false);
+    }//GEN-LAST:event_jRadioButton6ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1010,8 +1052,6 @@ public class InventoryMainFrame extends MyFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1023,6 +1063,10 @@ public class InventoryMainFrame extends MyFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
