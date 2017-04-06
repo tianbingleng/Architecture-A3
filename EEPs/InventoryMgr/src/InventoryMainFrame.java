@@ -26,15 +26,18 @@ import java.sql.ResultSet;
  *
  * @author lattanze
  */
-public class InventoryMainFrame extends javax.swing.JFrame {
+public class InventoryMainFrame extends MyFrame {
 
        String versionID = "v2.10.10";
+       
 
     /** Creates new form AddInventoryMainFrame */
     public InventoryMainFrame() {
         initComponents();
         jLabel1.setText("Inventory Management Application " + versionID);
     }
+    
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -943,8 +946,8 @@ public class InventoryMainFrame extends javax.swing.JFrame {
             {
                 // get the data from the text fields
                 String group = "inventory";
-                String username = "hardcodenow";
                 String logintype = "logout";
+                String username = this.getUsername();
                 String status = "successful";
 
                 // create an SQL statement variable and create the INSERT
