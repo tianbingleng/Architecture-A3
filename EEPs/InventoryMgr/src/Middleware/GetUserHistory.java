@@ -48,12 +48,13 @@ public class GetUserHistory
                 String msgString ="";
 
                 // Now we list the loginhistory for the selected table
-                resultSB.append("==============================================\n");
-                resultSB.append("Category       DateTime                  ");
-                resultSB.append("Type        Status       Username");
+                resultSB.append("Category               DateTime                    ");
+                resultSB.append("IP Address                    ");
+                resultSB.append("Type       Status       Username\n");
+                resultSB.append("=============================================================");
                 while (res.next())
                 {
-                    msgString = res.getString(1) + "  " + res.getString(5) +
+                    msgString = res.getString(1) + "  " + res.getString(6) +"        "+res.getString(5) +
                             "          "+ res.getString(3) + "         " + res.getString(4) + "       " + res.getString(2);
                     resultSB.append("\n"+msgString);
 

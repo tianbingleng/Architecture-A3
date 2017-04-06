@@ -1,6 +1,7 @@
 
 import java.sql.ResultSet;
 import Middleware.GetUserHistory;
+import javax.swing.JFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,15 +22,10 @@ public class LoginHistoryFrame extends javax.swing.JFrame {
         initComponents();
         loadUserHistory(SQLServerIPAddress);
         jTextArea1.setEditable(false);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
     
-    private void loadUserHistory(String SQLServerIPAddress) {
-
-        String msgString = null;        // String for displaying non-error messages
-        ResultSet res = null;           // SQL query result set pointer
-        String tableSelected = null;    // String used to determine which data table to use
-        java.sql.Statement s = null;    // SQL statement pointer
-        
+    private void loadUserHistory(String SQLServerIPAddress) {        
         String result = GetUserHistory.getUserHistoryList(SQLServerIPAddress, "inventory");
         jTextArea1.setText(result);
         
