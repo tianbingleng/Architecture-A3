@@ -7,6 +7,7 @@ import Middleware.AddLogInLogOutInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.stream.Stream;
 import javax.swing.JOptionPane;
 
 /******************************************************************************
@@ -35,10 +36,14 @@ import javax.swing.JOptionPane;
 public class InventoryMainFrame extends MyFrame {
 
        String versionID = "v2.10.10";
-
+       String [] inventoryItemEEP = {"trees", "seeds", "shrubs"};
+       String [] inventoryItemLeaftech = {"cultureboxes", "processing", "genomics", "referencematerials"};
+       String selection = "";
     /** Creates new form AddInventoryMainFrame */
     public InventoryMainFrame() {
         initComponents();
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(Stream.of(inventoryItemEEP, inventoryItemLeaftech).flatMap(Stream::of)
+                .toArray(String[]::new)));
         jLabel1.setText("Inventory Management Application " + versionID);
     }
 
@@ -51,9 +56,6 @@ public class InventoryMainFrame extends MyFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -73,36 +75,13 @@ public class InventoryMainFrame extends MyFrame {
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
         jSeparator1 = new javax.swing.JSeparator();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jRadioButton1.setText("Trees");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton2.setText("Shrubs");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton3.setText("Seeds");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("EEPs Inventory Management Application");
@@ -162,34 +141,6 @@ public class InventoryMainFrame extends MyFrame {
 
         jLabel8.setText("Decrements inventory count of item selected from the list");
 
-        jRadioButton4.setText("Culture Boxes");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton5.setText("Genomics");
-        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton5ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton6.setText("Processing");
-        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton6ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton7.setText("Reference Materials");
-        jRadioButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton7ActionPerformed(evt);
-            }
-        });
-
         jButton5.setText("Log Out");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,18 +155,14 @@ public class InventoryMainFrame extends MyFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel9.setText("Select Inventory Item");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(324, 324, 324)
-                .addComponent(jLabel1)
-                .addGap(126, 126, 126)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                .addGap(41, 41, 41)
-                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,37 +183,29 @@ public class InventoryMainFrame extends MyFrame {
                                             .addComponent(jTextField3)
                                             .addComponent(jTextField4)
                                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(38, 38, 38)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(2, 2, 2)
-                                                .addComponent(jRadioButton1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jRadioButton4))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jRadioButton3)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(201, 201, 201)
+                                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jRadioButton7)
-                                                    .addComponent(jRadioButton5)))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel7)
+                                                        .addGap(0, 0, Short.MAX_VALUE))
+                                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jRadioButton2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jRadioButton6)))
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel7)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel9)
+                                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -277,6 +216,14 @@ public class InventoryMainFrame extends MyFrame {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(324, 324, 324)
+                .addComponent(jLabel1)
+                .addGap(126, 126, 126)
+                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
+                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,36 +247,29 @@ public class InventoryMainFrame extends MyFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jLabel2)
-                            .addComponent(jRadioButton4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)
-                                .addComponent(jRadioButton3))
-                            .addComponent(jRadioButton5, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jLabel4)
-                            .addComponent(jRadioButton6)))
+                            .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton4)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,40 +279,6 @@ public class InventoryMainFrame extends MyFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        jRadioButton1.setSelected(true);
-        jRadioButton2.setSelected(false);
-        jRadioButton3.setSelected(false);
-        jRadioButton4.setSelected(false);
-        jRadioButton5.setSelected(false);
-        jRadioButton6.setSelected(false);
-        jRadioButton7.setSelected(false);
-        
-
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(false);
-        jRadioButton3.setSelected(true);
-        jRadioButton4.setSelected(false);
-        jRadioButton5.setSelected(false);
-        jRadioButton6.setSelected(false);
-        jRadioButton7.setSelected(false);
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(true);        
-        jRadioButton3.setSelected(false);
-        jRadioButton4.setSelected(false);
-        jRadioButton5.setSelected(false);
-        jRadioButton6.setSelected(false);
-        jRadioButton7.setSelected(false);
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         // Adds inventory to database
@@ -381,12 +287,12 @@ public class InventoryMainFrame extends MyFrame {
         Integer quantity;               // Quantity of trees, seeds, or shrubs
         Float perUnitCost;              // Cost per tree, seed, or shrub unit
         String productID = null;        // Product id of tree, seed, or shrub
-        
+        selection = jComboBox1.getSelectedItem().toString();
         // Check to make sure a radio button is selected
        
         jTextArea1.setText("");
         
-        if (!jRadioButton1.isSelected() && !jRadioButton2.isSelected() && !jRadioButton3.isSelected()
+       /* if (!jRadioButton1.isSelected() && !jRadioButton2.isSelected() && !jRadioButton3.isSelected()
             && !jRadioButton4.isSelected() && !jRadioButton5.isSelected() && !jRadioButton6.isSelected()
             && !jRadioButton7.isSelected())
         {
@@ -394,7 +300,7 @@ public class InventoryMainFrame extends MyFrame {
             jTextArea1.append("\nMust select category radio button.");
         }
         else
-        {
+        {*/
             //Make sure there is a product description
             if ( jTextField5.getText().length() == 0 )
             {
@@ -429,7 +335,7 @@ public class InventoryMainFrame extends MyFrame {
                     } // price
                 } // product ID
             } //product description
-        } //category selected
+         //category selected
 
         //If there is not connection error, then we form the SQL statement
         //and then execute it.
@@ -440,7 +346,9 @@ public class InventoryMainFrame extends MyFrame {
             productID = jTextField2.getText();
             quantity = Integer.parseInt(jTextField4.getText());
             perUnitCost = Float.parseFloat(jTextField3.getText());
-
+            String result = AddProductInfo.addProduct(jTextField1.getText(), selection, 
+                        productID, description, quantity.toString(), perUnitCost.toString());
+            jTextArea1.setText(result);/*
             if (jRadioButton1.isSelected())
             {
                 String result = AddProductInfo.addProduct(jTextField1.getText(), "trees", 
@@ -482,7 +390,7 @@ public class InventoryMainFrame extends MyFrame {
                 String result = AddProductInfo.addProduct(jTextField1.getText(), "referencematerials", 
                         productID, description, quantity.toString(), perUnitCost.toString());
                 jTextArea1.setText(result);
-            }
+            }*/
         } //execute SQL check
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -491,9 +399,9 @@ public class InventoryMainFrame extends MyFrame {
         // radio button
         Boolean fieldError = true;      // Error flag
         String msgString = null;        // String for displaying non-error messages
-
+        selection = jComboBox1.getSelectedItem().toString();
         // Check to make sure a radio button is selected
-        if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected() 
+       /* if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected() 
                 ||jRadioButton4.isSelected() || jRadioButton5.isSelected() || jRadioButton6.isSelected()
                 ||jRadioButton7.isSelected())
         {
@@ -503,7 +411,7 @@ public class InventoryMainFrame extends MyFrame {
 
             msgString = "Must select category radio button.";
             jTextArea1.setText("\n"+msgString);
-        }
+        }*/
         //Now, we try to connect to the inventory database.
         if (!fieldError)
         {
@@ -514,7 +422,9 @@ public class InventoryMainFrame extends MyFrame {
             jTextField5.setText("");
             jTextArea1.setText("");
             
-            if (jRadioButton1.isSelected())
+             String result = ListProductInfo.getProductList(jTextField1.getText(), selection);
+                jTextArea1.setText(result);
+            /*if (jRadioButton1.isSelected())
             {
                 String result = ListProductInfo.getProductList(jTextField1.getText(), "trees");
                 jTextArea1.setText(result);
@@ -550,7 +460,7 @@ public class InventoryMainFrame extends MyFrame {
                 jTextArea1.setText(result);
             }
             // end try-catch
-
+*/
         } // fielderror check - make sure a product is selected
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -607,7 +517,8 @@ public class InventoryMainFrame extends MyFrame {
             {
                 jTextArea1.setText("");
                 jTextArea1.append( "Deleting ProductID: " + productID );
-                String category = "category";
+               // String category = "category";
+                selection = jComboBox1.getSelectedItem().toString();/*
                 if (jRadioButton1.isSelected())
                     category = "trees";
                 if (jRadioButton2.isSelected())
@@ -627,8 +538,8 @@ public class InventoryMainFrame extends MyFrame {
               
                 if (jRadioButton7.isSelected())
                     category = "referencematerials";
-                
-                jTextArea1.append(DeleteProduct.deleteProduct(jTextField1.getText(),category,productID));
+                */
+                jTextArea1.append(DeleteProduct.deleteProduct(jTextField1.getText(),selection,productID));
 
                                        
             } else {
@@ -700,7 +611,8 @@ public class InventoryMainFrame extends MyFrame {
             {
                 jTextArea1.setText("");
                 jTextArea1.append( "Deleting ProductID: " + productID );
-                String category="category";
+                //String category="category";
+                selection = jComboBox1.getSelectedItem().toString();/*
                 if (jRadioButton1.isSelected())
                     category = "trees";
                 if (jRadioButton2.isSelected())
@@ -720,8 +632,8 @@ public class InventoryMainFrame extends MyFrame {
               
                 if (jRadioButton7.isSelected())
                     category = "referencematerials";
-
-                jTextArea1.append(DecrementProduct.decrementProduct(jTextField1.getText(),category,productID));
+*/
+                jTextArea1.append(DecrementProduct.decrementProduct(jTextField1.getText(),selection,productID));
                                        
             } else {
 
@@ -757,50 +669,6 @@ public class InventoryMainFrame extends MyFrame {
         new LoginHistoryFrame(jTextField1.getText()).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(false);        
-        jRadioButton3.setSelected(false);
-        jRadioButton4.setSelected(true);
-        jRadioButton5.setSelected(false);
-        jRadioButton6.setSelected(false);
-        jRadioButton7.setSelected(false);
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
-
-    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-        // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(false);        
-        jRadioButton3.setSelected(false);
-        jRadioButton4.setSelected(false);
-        jRadioButton5.setSelected(true);
-        jRadioButton6.setSelected(false);
-        jRadioButton7.setSelected(false);
-    }//GEN-LAST:event_jRadioButton5ActionPerformed
-
-    private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
-        // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(false);        
-        jRadioButton3.setSelected(false);
-        jRadioButton4.setSelected(false);
-        jRadioButton5.setSelected(false);
-        jRadioButton6.setSelected(false);
-        jRadioButton7.setSelected(true);
-    }//GEN-LAST:event_jRadioButton7ActionPerformed
-
-    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-        // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(false);        
-        jRadioButton3.setSelected(false);
-        jRadioButton4.setSelected(false);
-        jRadioButton5.setSelected(false);
-        jRadioButton6.setSelected(true);
-        jRadioButton7.setSelected(false);
-    }//GEN-LAST:event_jRadioButton6ActionPerformed
-
     /**
     * @param args the command line arguments
     */
@@ -819,6 +687,7 @@ public class InventoryMainFrame extends MyFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -827,13 +696,7 @@ public class InventoryMainFrame extends MyFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
