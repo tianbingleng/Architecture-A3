@@ -1,3 +1,4 @@
+import Middleware.AddLogInLogOutInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -141,10 +142,13 @@ public class LoginFrame extends javax.swing.JFrame {
         String result = GetUserInfo.getLoginStatus(databaseIP, groupName, username, passwordString);
         if (result.equals("success")){
             JOptionPane.showMessageDialog(this, "Login success");
+            AddLogInLogOutInfo.addLoginInfo(databaseIP, groupName, username, "success");
             frame.setUsername(username);
             frame.setVisible(true);
+            this.setVisible(false);
         }
         else if (result.equals("fail")){
+            AddLogInLogOutInfo.addLoginInfo(databaseIP, groupName, username, "failure");
             JOptionPane.showMessageDialog(this, "Login fail. Wrong username, password or group name");
         }
         else{
