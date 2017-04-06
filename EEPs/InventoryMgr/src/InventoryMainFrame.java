@@ -1,5 +1,6 @@
 
 import Middleware.AddProductInfo;
+import Middleware.DecrementProduct;
 import Middleware.GetProductInfo;
 import Middleware.DeleteProduct;
 import java.sql.Connection;
@@ -620,7 +621,7 @@ public class InventoryMainFrame extends MyFrame {
                     category = "genomics";
 
                 if (jRadioButton6.isSelected())
-                     category = "processing";
+                    category = "processing";
               
                 if (jRadioButton7.isSelected())
                     category = "referencematerials";
@@ -697,88 +698,28 @@ public class InventoryMainFrame extends MyFrame {
             {
                 jTextArea1.setText("");
                 jTextArea1.append( "Deleting ProductID: " + productID );
-
-                // set up a connection to the LeafTech database
-                try
-                {                
-                    //load JDBC driver class for MySQL
-                    Class.forName( "com.mysql.jdbc.Driver" );
-
-                    //define the data source
-                    String SQLServerIP = jTextField1.getText();
-                    String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/inventory";
-
-                    //create a connection to the db
-                    DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
-
-                } catch (Exception e) {
-
-                    errString =  "\nProblem connecting to database:: " + e;
-                    jTextArea1.append(errString);
-                    connectError = true;
-
-                } // end try-catch
+                String category="category";
+                if (jRadioButton1.isSelected())
+                    category = "trees";
+                if (jRadioButton2.isSelected())
+                    category = "shrubs";
+            
+                if (jRadioButton3.isSelected())
+                    category = "seeds";
+            
+                if (jRadioButton4.isSelected())
+                    category = "cultureboxes";
                 
-                //If there is no connection error, then we form the SQL statement
-                //to decrement the inventory item count and then execute it.
+                if (jRadioButton5.isSelected())
+                    category = "genomics";
 
-                if (!connectError )
-                {
-                    try
-                    {
-                        s = DBConn.createStatement();
+                if (jRadioButton6.isSelected())
+                    category = "processing";
+              
+                if (jRadioButton7.isSelected())
+                    category = "referencematerials";
 
-                        // if trees inventory selected
-                        if (jRadioButton1.isSelected())
-                        {
-                            SQLstatement1 = ("UPDATE trees set quantity=(quantity-1) where product_code = '" + productID + "';");
-                            SQLstatement2 = ("SELECT * from trees where product_code = '" + productID + "';");
-                            tableSelected = "TREES";
-                        }
-
-                        // if strubs inventory selected
-                        if (jRadioButton2.isSelected())
-                        {
-                            SQLstatement1 = ("UPDATE shrubs set quantity=(quantity-1) where product_code = '" + productID + "';");
-                            SQLstatement2 = ("SELECT * from shrubs where product_code = '" + productID + "';");
-                            tableSelected = "SHRUBS";
-                        }
-
-                        // if seeds inventory selected
-                        if (jRadioButton3.isSelected())
-                        {
-                            SQLstatement1 = ("UPDATE seeds set quantity=(quantity-1) where product_code = '" + productID + "';");
-                            SQLstatement2 = ("SELECT * from seeds where product_code = '" + productID + "';");
-                            tableSelected = "SEEDS";
-                        }
-
-                        // execute the update, then query the BD for the table entry for the item just changed
-                        // and display it for the user
-                        
-                        executeUpdateVal = s.executeUpdate(SQLstatement1);
-                        res = s.executeQuery(SQLstatement2);
-                       
-                        
-                        jTextArea1.append("\n\n" + productID + " inventory decremented...");
-                        
-                        while (res.next())
-                        {
-                            msgString = tableSelected + ">> " + res.getString(1) + " :: " + res.getString(2) +
-                            " :: "+ res.getString(3) + " :: " + res.getString(4);
-                            jTextArea1.append("\n"+msgString);
-
-                        } // while
-                        
-                        jTextArea1.append("\n\n Number of items updated: " + executeUpdateVal );
-
-                    } catch (Exception e) {
-
-                        errString =  "\nProblem with delete:: " + e;
-                        jTextArea1.append(errString);
-
-                    } // try
-               
-                } // connection check    
+                jTextArea1.append(DecrementProduct.decrementProduct(jTextField1.getText(),category,productID));
                                        
             } else {
 
