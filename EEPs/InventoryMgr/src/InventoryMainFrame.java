@@ -3,7 +3,7 @@ import Middleware.AddProductInfo;
 import Middleware.DecrementProduct;
 import Middleware.GetProductInfo;
 import Middleware.DeleteProduct;
-import Middleware.AddLogoutInfo;
+import Middleware.AddLogInLogOutInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -744,7 +744,7 @@ public class InventoryMainFrame extends MyFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         // When user log out
-        String result = AddLogoutInfo.addLogoutInfo(jTextField1.getText(), "inventory", getUsername());  
+        String result = AddLogInLogOutInfo.addLogoutInfo(jTextField1.getText(), "inventory", getUsername());  
         JOptionPane.showMessageDialog(this, "Logout Success.");
         this.dispose();
         System.exit(0);
