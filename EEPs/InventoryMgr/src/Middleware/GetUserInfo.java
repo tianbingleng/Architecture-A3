@@ -5,9 +5,6 @@
  */
 package Middleware;
 
-import static Middleware.GetProductInfo.databaseSelect;
-import static Middleware.GetProductInfo.password;
-import static Middleware.GetProductInfo.username;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
