@@ -397,7 +397,7 @@ public class InventoryMainFrame extends MyFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // This button will list the inventory for the product selected by the
         // radio button
-        Boolean fieldError = true;      // Error flag
+        Boolean fieldError = false;      // Error flag
         String msgString = null;        // String for displaying non-error messages
         selection = jComboBox1.getSelectedItem().toString();
         // Check to make sure a radio button is selected
